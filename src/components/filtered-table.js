@@ -40,8 +40,8 @@ class FilteredTable extends Component {
     if (!this.props.rawTracks) return;
 
     this.updateFiltersFields(this.props.rawTracks);
-    this.updatePaginationTotalPages(this.props.rawTracks);
     this.applyAllFiltersToTracks(this.props.rawTracks);
+    this.updatePaginationTotalPages(this.props.rawTracks);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,8 +49,8 @@ class FilteredTable extends Component {
     console.log('nextProps: ', nextProps);
     this.resetAllFilters();
     this.updateFiltersFields(nextProps.rawTracks);
-    this.updatePaginationTotalPages(nextProps.rawTracks);
     this.applyAllFiltersToTracks(nextProps.rawTracks);
+    this.updatePaginationTotalPages(nextProps.rawTracks);
   }
 
   render() {
@@ -98,14 +98,17 @@ class FilteredTable extends Component {
       //   order: 'asc'
       // };
 
-
-
       filteredTracks.sort(sortingFunction);
 
-      //построить пагинацию и выдать первую страницу
+      //построить пагинацию и выдать первую страницу?
+      // this.updatePaginationTotalPages(filteredTracks); //TODO
 
-
-      return {tracks: filteredTracks} // TODO: potential dangerous due asynchronous. Check later
+      return {
+        tracks: filteredTracks,
+        pagination: {
+          page: 1,
+        }
+      } // TODO: potential dangerous due asynchronous. Check later
     });
 
     return result;
@@ -154,13 +157,13 @@ class FilteredTable extends Component {
     return unique;
   }
 
-  updatePaginationTotalPages(rawTracks) {
-    if (!rawTracks) return;
+  updatePaginationTotalPages(tracks) {
+    if (!tracks) return;
 
     this.setState((prevState, props) => {
       const itemsPerPage = prevState.pagination.itemsPerPage;
-      const totalItems = rawTracks.length;
-      const newTotalPages = (totalItems / itemsPerPage);
+      const totalItems = tracks.length;
+      const newTotalPages = Math.ceil(totalItems / itemsPerPage);
       return {
         pagination: {
           totalPages: newTotalPages
