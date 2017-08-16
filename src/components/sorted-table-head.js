@@ -8,7 +8,6 @@ class SortedTableHead extends Component {
     this.handleSorting = this.handleSorting.bind(this);
   }
 
-  //todo click handler
   handleSorting(fieldData) {
     this.props.handleSorting(fieldData);
   }

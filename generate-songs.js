@@ -11,7 +11,7 @@ const GENRES = [
   'Noise'
 ];
 const FILE_PATH = path.join(__dirname, '/src/mocks/tracks.json');
-const AMOUNT = 204;
+const AMOUNT = 214;
 
 generate();
 

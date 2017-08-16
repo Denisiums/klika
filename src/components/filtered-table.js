@@ -91,7 +91,6 @@ class FilteredTable extends Component {
       const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);
       const filteredTracks = this.state.tracks.slice();
       filteredTracks.sort(sortingFunction);
-
       return {
         tracks: filteredTracks,
         pagination: {
@@ -213,14 +212,14 @@ class FilteredTable extends Component {
     if (field === 'year' || field === 'duration') {
       sortingFunction = function(a, b) {
         const aValue = a[field];
-        const bValue = a[field];
+        const bValue = b[field];
         return (order === 'asc' ? (aValue - bValue) : (bValue - aValue));
       };
-    } else if (field === 'genre' || field === 'performer') {
+    } else {
       sortingFunction = function(a, b) {
         //a.localeCompare(b)?
         const aValue = a[field];
-        const bValue = a[field];
+        const bValue = b[field];
         const loweredA = aValue.toLowerCase();
         const loweredB = bValue.toLowerCase();
         if (loweredA < loweredB) return (order === 'asc' ? -1 : 1);
