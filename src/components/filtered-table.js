@@ -66,14 +66,45 @@ class FilteredTable extends Component {
   applyAllFiltersToTracks(rawTracks) {
     if (!rawTracks || !Array.isArray(rawTracks)) throw new Error('Invalid array');
 
-    const filteredTracks = [];
+    let filteredTracks = [];
     //TODO: apply all filters and paging and sorting from state
 
-
-
-
-
     this.setState((prevState, props) => {
+      const filter = prevState.filters;
+      const sorting = prevState.sorting;
+      const pagination = prevState.pagination;
+      const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);;
+
+      //отфильтровать по жанрам и прочим исполнителям
+
+      // const DEFAULT_FILTERS = {
+      //   performer: 'all',
+      //   genre: 'all',
+      //   year: 'all'
+      // };
+
+      filteredTracks = rawTracks.filter((el, index) => {
+        return (FilteredTable.isPerformerValid(el.performer, filter.performer)
+          && FilteredTable.isGenreValid(el.genre, filter.genre)
+          && FilteredTable.isYearValid(el.year, filter.year));
+      });
+
+      console.log('filteredTracks after 1st filter length: ', filteredTracks.length, filteredTracks.slice());
+
+      //отсортировать список по полю и направлению
+
+      // const DEFAULT_SORTING = {
+      //   field: 'performer',
+      //   order: 'asc'
+      // };
+
+
+
+      filteredTracks.sort(sortingFunction);
+
+      //построить пагинацию и выдать первую страницу
+
+
       return {tracks: filteredTracks} // TODO: potential dangerous due asynchronous. Check later
     });
 
@@ -137,6 +168,42 @@ class FilteredTable extends Component {
       }
     })
   }
+
+  static isPerformerValid(performer, filterValue) {
+    FilteredTable.isValuePassFilter(performer, filterValue);
+  }
+
+  static isGenreValid(genre, filterValue) {
+    FilteredTable.isValuePassFilter(genre, filterValue);
+  }
+
+  static isYearValid(year, filterValue) {
+    FilteredTable.isValuePassFilter(year, filterValue);
+  }
+
+  static isValuePassFilter(value, filterValue) {
+    return filterValue === 'all' || value === filterValue;
+  }
+
+  static getFieldSortingFunction(field, order) {
+    let sortingFunction = function() {};
+    if (field === 'year' || field === 'duration') {
+      sortingFunction = function(a, b) {
+        return (order === 'asc' ? (a - b) : (b - a));
+      };
+    } else if (field === 'genre' || field === 'performer') {
+      sortingFunction = function(a, b) {
+        //a.localeCompare(b)?
+        const loweredA = a.toLowerCase();
+        const loweredB = b.toLowerCase();
+        if (loweredA < loweredB) return (order === 'asc' ? -1 : 1);
+        if (loweredA > loweredB) return (order === 'asc' ? 1 : -1);
+        return 0;
+      };
+    }
+    return sortingFunction;
+  }
+
 }
 
 export default FilteredTable;
