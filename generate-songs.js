@@ -21,10 +21,9 @@ function generate() {
       throw err;
     }
 
-    console.log('The file has been saved!');
+    console.log('Songs have been generated');
   });
 }
-
 
 function generateSongsJSON(amount) {
   if (Number.isNaN(amount) || amount < 1) {
@@ -57,7 +56,6 @@ function generateSongs(amount) {
       "year": generateYear(),
       "duration": generateDuration()
     };
-    console.log('song: ', song);
     result.push(song);
   }
 
@@ -77,7 +75,7 @@ function generateSongName() {
 }
 
 function generateGenre() {
-  return GENRES[getRandomNumberInInterval(0, GENRES.length)];
+  return GENRES[getRandomNumberInInterval(0, GENRES.length - 1)];
 }
 
 function generateYear() {

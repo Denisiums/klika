@@ -13,8 +13,9 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && react-scripts build",
+    "generate-songs": "node generate-songs",
+    "start": "npm-run-all -p watch-css start-js generate-songs",
+    "build": "npm run generate-songs && npm run build-css && react-scripts build",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
