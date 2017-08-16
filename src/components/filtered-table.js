@@ -45,8 +45,6 @@ class FilteredTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('current props: ', this.props);
-    console.log('nextProps: ', nextProps);
     this.resetAllFilters();
     this.updateFiltersFields(nextProps.rawTracks);
     this.applyAllFiltersToTracks(nextProps.rawTracks);
@@ -65,42 +63,24 @@ class FilteredTable extends Component {
 
   applyAllFiltersToTracks(rawTracks) {
     if (!rawTracks || !Array.isArray(rawTracks)) throw new Error('Invalid array');
-
-    let filteredTracks = [];
     //TODO: apply all filters and paging and sorting from state
 
     this.setState((prevState, props) => {
       const filter = prevState.filters;
       const sorting = prevState.sorting;
       const pagination = prevState.pagination;
-      const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);;
-
-      //отфильтровать по жанрам и прочим исполнителям
-
-      // const DEFAULT_FILTERS = {
-      //   performer: 'all',
-      //   genre: 'all',
-      //   year: 'all'
-      // };
+      const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);
+      let filteredTracks = [];
 
       filteredTracks = rawTracks.filter((el, index) => {
+
         return (FilteredTable.isPerformerValid(el.performer, filter.performer)
           && FilteredTable.isGenreValid(el.genre, filter.genre)
           && FilteredTable.isYearValid(el.year, filter.year));
       });
 
-      console.log('filteredTracks after 1st filter length: ', filteredTracks.length, filteredTracks.slice());
-
-      //отсортировать список по полю и направлению
-
-      // const DEFAULT_SORTING = {
-      //   field: 'performer',
-      //   order: 'asc'
-      // };
-
       filteredTracks.sort(sortingFunction);
 
-      //построить пагинацию и выдать первую страницу?
       // this.updatePaginationTotalPages(filteredTracks); //TODO
 
       return {
@@ -110,10 +90,7 @@ class FilteredTable extends Component {
         }
       } // TODO: potential dangerous due asynchronous. Check later
     });
-
-    return result;
   };
-
 
   resetAllFilters() {
     this.resetFilters();
@@ -143,9 +120,9 @@ class FilteredTable extends Component {
     if (!rawTracks) return;
 
     const filters = Object.assign({}, DEFAULT_FILTERS_FIELDS);
-    filters.performer.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'performer'));
-    filters.genre.concat(this.getUniqueValuesByKeyFromArray(rawTracks), 'genre');
-    filters.year.concat(this.getUniqueValuesByKeyFromArray(rawTracks), 'year');
+    filters.performer = filters.performer.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'performer'));
+    filters.genre = filters.genre.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'genre'));
+    filters.year = filters.year.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'year'));
     this.setState({
       filersFields: filters
     });
@@ -153,6 +130,7 @@ class FilteredTable extends Component {
 
   getUniqueValuesByKeyFromArray(array, key) {
     if (!Array.isArray(array) || !key) throw new Error('Invalid arguments');
+
     const unique = [...new Set(array.map(item => item[key]))];
     return unique;
   }
@@ -173,15 +151,15 @@ class FilteredTable extends Component {
   }
 
   static isPerformerValid(performer, filterValue) {
-    FilteredTable.isValuePassFilter(performer, filterValue);
+    return FilteredTable.isValuePassFilter(performer, filterValue);
   }
 
   static isGenreValid(genre, filterValue) {
-    FilteredTable.isValuePassFilter(genre, filterValue);
+    return FilteredTable.isValuePassFilter(genre, filterValue);
   }
 
   static isYearValid(year, filterValue) {
-    FilteredTable.isValuePassFilter(year, filterValue);
+    return FilteredTable.isValuePassFilter(year, filterValue);
   }
 
   static isValuePassFilter(value, filterValue) {
@@ -192,13 +170,17 @@ class FilteredTable extends Component {
     let sortingFunction = function() {};
     if (field === 'year' || field === 'duration') {
       sortingFunction = function(a, b) {
-        return (order === 'asc' ? (a - b) : (b - a));
+        const aValue = a[field];
+        const bValue = a[field];
+        return (order === 'asc' ? (aValue - bValue) : (bValue - aValue));
       };
     } else if (field === 'genre' || field === 'performer') {
       sortingFunction = function(a, b) {
         //a.localeCompare(b)?
-        const loweredA = a.toLowerCase();
-        const loweredB = b.toLowerCase();
+        const aValue = a[field];
+        const bValue = a[field];
+        const loweredA = aValue.toLowerCase();
+        const loweredB = bValue.toLowerCase();
         if (loweredA < loweredB) return (order === 'asc' ? -1 : 1);
         if (loweredA > loweredB) return (order === 'asc' ? 1 : -1);
         return 0;
