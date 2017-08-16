@@ -34,7 +34,8 @@ class FilteredTable extends Component {
       pagination: Object.assign({}, DEFAULT_PAGINATION),
       sorting: Object.assign({}, DEFAULT_SORTING),
       filersFields: Object.assign({}, DEFAULT_FILTERS_FIELDS)
-    }
+    };
+    this.handleSorting = this.handleSorting.bind(this);
   };
 
   componentDidMount() {
@@ -56,17 +57,57 @@ class FilteredTable extends Component {
     if (!this.state.tracks) return null;
     return (
       <div className="filtered-table">
-        <SortedTable tracks={this.state.tracks} sorting={this.state.sorting} />
+        <SortedTable handleSorting={this.handleSorting} tracks={this.state.tracks} sorting={this.state.sorting} />
         <div>Filters</div>
       </div>
     );
   }
+
+  handleSorting(fieldData) {
+    console.log('handleSorting');
+    const fieldValue = fieldData.field;
+    this.updateSorting(fieldValue);
+  }
+
+  updateSorting(field) {
+    this.setState((prevState) => {
+      console.log('updateSorting');
+      const oldField = prevState.sorting.field;
+      const oldOrder = prevState.sorting.order;
+      return {
+        sorting: {
+          field: field,
+          order: field === oldField ? FilteredTable.getReversedSortingFilerOrder(oldOrder) : DEFAULT_SORTING.order
+        }
+      }
+    });
+    this.applySortingToTracks();
+  }
+
+  applySortingToTracks() {
+    this.setState((prevState) => {
+      console.log('applySortingToTracks');
+      const sorting = prevState.sorting;
+      const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);
+      const filteredTracks = this.state.tracks.slice();
+      filteredTracks.sort(sortingFunction);
+
+      return {
+        tracks: filteredTracks,
+        pagination: {
+          page: 1,
+        }
+      }
+    });
+  }
+
 
   applyAllFiltersToTracks(rawTracks) {
     if (!rawTracks || !Array.isArray(rawTracks)) throw new Error('Invalid array');
     //TODO: apply all filters and paging and sorting from state
 
     this.setState((prevState, props) => {
+      console.log('applyAllFiltersToTracks');
       const filter = prevState.filters;
       const sorting = prevState.sorting;
       const pagination = prevState.pagination;
@@ -188,6 +229,10 @@ class FilteredTable extends Component {
       };
     }
     return sortingFunction;
+  }
+
+  static getReversedSortingFilerOrder(order) {
+    return (order === 'asc' ? 'desc' : 'asc');
   }
 
 }
