@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/filtered-table.css';
+import SortedTable from './sorted-table';
 
 const DEFAULT_FILTERS = {
   performer: 'all',
@@ -55,7 +56,7 @@ class FilteredTable extends Component {
     if (!this.state.tracks) return null;
     return (
       <div className="filtered-table">
-        <div>Table</div>
+        <SortedTable tracks={this.state.tracks} sorting={this.state.sorting} />
         <div>Filters</div>
       </div>
     );
