@@ -1,1 +1,1 @@
-Some test project
+Some test project. npm start
