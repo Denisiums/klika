@@ -28,4 +28,20 @@
       cursor: pointer;
     }
   }
+  &__text {
+    position: relative;
+    &--head {
+      font-weight: bold;
+    }
+  }
+  &__arrow {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: rotate(90deg);
+    opacity: .2;
+    &--active {
+      opacity: 1;
+    }
+  }
 }

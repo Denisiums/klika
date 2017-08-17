@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import OrderArrow from './order-arrow';
 import '../styles/table.css';
 
 class SortingCell extends Component {
@@ -18,9 +19,10 @@ class SortingCell extends Component {
       <th
         onClick={this.handleClick}
         className="table__cell table__cell--head">
-        <span>{this.props.name}</span>
-        {this.props.order && <span> {this.props.order} </span>}
-        {!this.props.order && <span>N</span>}
+        <div className="table__text table__text--head">
+          <span>{this.props.name}</span>
+          <OrderArrow order={this.props.order}/>
+        </div>
       </th>
     );
   }
