@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import PaginationItemsPerPageButton from './pagination-items-per-page-button'
+import PaginationItemsPerPageButton from './pagination-items-per-page-button';
+import '../styles/pagination.css';
 
 const ITEMS_PER_PAGE = [10, 25, 50, 100];
 

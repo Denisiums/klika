@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SortingCell from './sorting-cell';
+import '../styles/table.css';
 
 class SortedTableHead extends Component {
 

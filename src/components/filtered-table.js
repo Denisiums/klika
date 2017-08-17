@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import '../styles/filtered-table.css';
 import SortedTable from './sorted-table';
 import Filters from './filters';
+import '../styles/table.css';
 
 const DEFAULT_FILTERS = {
   performer: 'all',

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FilterSelect from './filter-select';
+import '../styles/filters.css';
 
 class Filters extends Component {
 

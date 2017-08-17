@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PaginationPaging from './pagination-paging'
-import PaginationItemsPerPage from './pagination-items-per-page'
+import PaginationPaging from './pagination-paging';
+import PaginationItemsPerPage from './pagination-items-per-page';
+import '../styles/pagination.css';
 
 class Pagination extends Component {
 

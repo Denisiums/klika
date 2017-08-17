@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SortedTableHead from './sorted-table-head';
 import Pagination from './pagination';
 import TableRow from './table-row';
-import '../styles/sorted-table.css';
+import '../styles/table.css';
 
 class SortedTable extends Component {
 

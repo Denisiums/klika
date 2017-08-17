@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/table.css';
 
 class SortingCell extends Component {
 
