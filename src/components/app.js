@@ -14,7 +14,7 @@ class App extends Component {
   componentDidMount() {
     this.getTracksList()
       .then(tracks => {
-        const parsedTracks = Array.isArray(tracks) ?  tracks : this._tryParseJSONString(tracks);
+        const parsedTracks = Array.isArray(tracks) ?  tracks : App._tryParseJSONString(tracks);
         this.setState({rawTracks: parsedTracks});
       })
       .catch(err => {
@@ -22,17 +22,15 @@ class App extends Component {
       });
   }
 
-  _tryParseJSONString(string) {
-    let result = null;
-    try {
-      result = JSON.parse(string);
-    }
-    catch(e) {
-      throw e;
-    }
-    return result;
+  render() {
+    if (!this.state.rawTracks) return null;
+    return (
+      <div className="app">
+        <FilteredTable rawTracks={this.state.rawTracks} />
+      </div>
+    );
   }
-
+  
   getTracksList() {
     return new Promise((resolve, reject) => {
       const tracks = TRACKS;
@@ -43,13 +41,15 @@ class App extends Component {
     })
   }
 
-  render() {
-    if (!this.state.rawTracks) return null;
-    return (
-      <div className="app">
-        <FilteredTable rawTracks={this.state.rawTracks} />
-      </div>
-    );
+  static  _tryParseJSONString(string) {
+    let result = null;
+    try {
+      result = JSON.parse(string);
+    }
+    catch(e) {
+      throw e;
+    }
+    return result;
   }
 }
 
