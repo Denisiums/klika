@@ -9,8 +9,7 @@ class PaginationPaging extends Component {
 
   handlePageClick(e) {
     const page = +e.target.textContent;
-    console.log('click!:', page);
-    this.props.handlePageClick(e.target.value);
+    this.props.handlePageClick(page);
   }
 
   render() {

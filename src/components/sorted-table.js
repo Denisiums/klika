@@ -10,6 +10,7 @@ class SortedTable extends Component {
     super(props);
     this.handleSorting = this.handleSorting.bind(this);
     this.handleItemsPerPageUpdate = this.handleItemsPerPageUpdate.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   handleSorting(fieldData) {
@@ -19,6 +20,12 @@ class SortedTable extends Component {
   handleItemsPerPageUpdate(itemsPerPage) {
     this.props.handleItemsPerPageUpdate(itemsPerPage);
   }
+
+  handlePageClick(page) {
+    console.log('sorted table page: ', page);
+    this.props.handlePageClick(page);
+  }
+
 
   render() {
     if (!this.props.tracks || !this.props.sorting || !this.props.pagination) return null;
@@ -32,18 +39,19 @@ class SortedTable extends Component {
         </table>
         <Pagination
           handleItemsPerPageUpdate={this.handleItemsPerPageUpdate}
+          handlePageClick={this.handlePageClick}
           pagination={this.props.pagination} />
       </div>
     );
   }
 
   generateRows() {
+    console.log('generate rows');
     const page = this.props.pagination.page;
     const itemsPerPage = this.props.pagination.itemsPerPage;
     const tracks = this.props.tracks;
     const tracksListFrame = SortedTable.getArrayFrameByPage(tracks, page, itemsPerPage);
     return (
-      //TODO: apply pagination here
       tracksListFrame.map(track => {
         return (<TableRow key={track.id} track={track} />);
       })

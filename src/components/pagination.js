@@ -7,10 +7,15 @@ class Pagination extends Component {
   constructor(props) {
     super(props);
     this.handleItemsPerPageUpdate = this.handleItemsPerPageUpdate.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   handleItemsPerPageUpdate(itemsPerPage) {
     this.props.handleItemsPerPageUpdate(itemsPerPage);
+  }
+
+  handlePageClick(page) {
+    this.props.handlePageClick(page);
   }
 
 
@@ -21,7 +26,7 @@ class Pagination extends Component {
     const totalPages = this.props.pagination.totalPages;
     return (
       <div>
-        <PaginationPaging page={page} totalPages={totalPages} />
+        <PaginationPaging handlePageClick={this.handlePageClick} page={page} totalPages={totalPages} />
         <PaginationItemsPerPage handleItemsPerPageUpdate={this.handleItemsPerPageUpdate} itemsPerPage={itemsPerPage} />
       </div>
     );

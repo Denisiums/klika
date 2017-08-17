@@ -37,6 +37,7 @@ class FilteredTable extends Component {
     };
     this.handleSorting = this.handleSorting.bind(this);
     this.updateItemsPerPage = this.updateItemsPerPage.bind(this);
+    this.updatePageNumber = this.updatePageNumber.bind(this);
   };
 
   componentDidMount() {
@@ -63,6 +64,7 @@ class FilteredTable extends Component {
           tracks={this.state.tracks}
           pagination={this.state.pagination}
           handleItemsPerPageUpdate={this.updateItemsPerPage}
+          handlePageClick={this.updatePageNumber}
           sorting={this.state.sorting} />
         <div>Filters</div>
       </div>
@@ -106,6 +108,20 @@ class FilteredTable extends Component {
         }
       }
     })
+  }
+
+  updatePageNumber(page) {
+    console.log('page: ', page);
+    if (!page || Number.isNaN(page)) throw new Error('Invalid page number!');
+    this.setState(prevState => {
+      const totalPages = prevState.pagination.totalPages;
+      const itemsPerPage = prevState.pagination.itemsPerPage;
+      return {
+        totalPages,
+        itemsPerPage,
+        page
+      }
+    });
   }
 
   applySortingToTracks() {
