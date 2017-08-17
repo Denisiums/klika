@@ -30,7 +30,7 @@ class App extends Component {
       </div>
     );
   }
-  
+
   getTracksList() {
     return new Promise((resolve, reject) => {
       const tracks = TRACKS;

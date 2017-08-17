@@ -39,6 +39,7 @@ class FilteredTable extends Component {
     this.handleSorting = this.handleSorting.bind(this);
     this.updateItemsPerPage = this.updateItemsPerPage.bind(this);
     this.updatePageNumber = this.updatePageNumber.bind(this);
+    this.updateFilter = this.updateFilter.bind(this);
   };
 
   componentDidMount() {
@@ -67,20 +68,21 @@ class FilteredTable extends Component {
           handleItemsPerPageUpdate={this.updateItemsPerPage}
           handlePageClick={this.updatePageNumber}
           sorting={this.state.sorting} />
-        <Filters filters={this.state.filters} filtersFields={this.state.filtersFields} />
+        <Filters
+          filters={this.state.filters}
+          onSelectFilter={this.updateFilter}
+          filtersFields={this.state.filtersFields} />
       </div>
     );
   }
 
   handleSorting(fieldData) {
-    console.log('handleSorting');
     const fieldValue = fieldData.field;
     this.updateSorting(fieldValue);
   }
 
   updateSorting(field) {
     this.setState((prevState) => {
-      console.log('updateSorting');
       const oldField = prevState.sorting.field;
       const oldOrder = prevState.sorting.order;
       return {
@@ -95,7 +97,6 @@ class FilteredTable extends Component {
   }
 
   updateItemsPerPage(itemsPerPage) {
-    console.log('updateItemsPerPage');
     if (!itemsPerPage || this.state.pagination.itemsPerPage === itemsPerPage) return;
     this.setState(prevState => {
       const totalItems = prevState.tracks.length;
@@ -130,7 +131,6 @@ class FilteredTable extends Component {
 
   applySortingToTracks() {
     this.setState((prevState) => {
-      console.log('applySortingToTracks');
       const sorting = prevState.sorting;
       const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);
       const filteredTracks = this.state.tracks.slice();
@@ -147,7 +147,6 @@ class FilteredTable extends Component {
     //TODO: apply all filters and paging and sorting from state
 
     this.setState((prevState, props) => {
-      console.log('applyAllFiltersToTracks');
       const filter = prevState.filters;
       const sorting = prevState.sorting;
       const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);
@@ -203,6 +202,19 @@ class FilteredTable extends Component {
     this.setState({
       filtersFields: filters
     });
+  }
+
+  updateFilter({filter, value}) {
+    if (!filter || !value) throw new Error('Invalid state arguments!');
+    this.setState(prevState => {
+      const newFilter = Object.assign({}, prevState.filters);
+      newFilter[filter] = value;
+      return {
+        filters: newFilter
+      };
+    });
+    this.applyAllFiltersToTracks(this.props.rawTracks);
+    this.updatePaginationTotalPages();
   }
 
   getUniqueValuesByKeyFromArray(array, key) {

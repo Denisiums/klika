@@ -12,29 +12,25 @@ class Filters extends Component {
 
   onSelectFilter(filter, value) {
     if (!filter || !value) throw new Error('Invalid arguments');
-    console.log('on select: ', filter, value);
+    this.props.onSelectFilter( { filter, value } );
   }
 
   onSelectPerformer(value) {
-    console.log('on select');
     this.onSelectFilter('performer', value);
   }
 
   onSelectGenre(value) {
-    console.log('on select');
     this.onSelectFilter('genre', value);
   }
 
   onSelectYear(value) {
-    console.log('on select');
     this.onSelectFilter('year', value);
   }
 
   render() {
     const filtersFields =  this.props.filtersFields;
     const filters = this.props.filters;
-    if (!filtersFields || !filters) return null;
-    console.log('filters: ', filters);
+    if (!filtersFields || !filters || !this.props.onSelectFilter) return null;
     return (
       <div className='filters'>
         <FilterSelect

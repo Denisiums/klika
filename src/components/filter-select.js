@@ -16,9 +16,6 @@ class FilterSelect extends Component {
     const options = this.props.options;
     const value = this.props.value;
     const name = this.props.name;
-    console.log('render: ', name);
-    console.log('value: ', value);
-    console.log('options: ', options);
     if (!options || !value || !name || !this.props.onSelectFilter) return null;
     return (
       <div className='filter'>
