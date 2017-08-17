@@ -114,7 +114,6 @@ class FilteredTable extends Component {
 
   updatePageNumber(page) {
     if (!page || Number.isNaN(page)) throw new Error('Invalid page number!');
-    // todo: should we check is page same as in the state?
     this.setState(prevState => {
       const totalPages = prevState.pagination.totalPages;
       const itemsPerPage = prevState.pagination.itemsPerPage;
@@ -144,7 +143,6 @@ class FilteredTable extends Component {
 
   applyAllFiltersToTracks(rawTracks) {
     if (!rawTracks || !Array.isArray(rawTracks)) throw new Error('Invalid array');
-    //TODO: apply all filters and paging and sorting from state
 
     this.setState((prevState, props) => {
       const filter = prevState.filters;
@@ -158,9 +156,6 @@ class FilteredTable extends Component {
       });
 
       filteredTracks.sort(sortingFunction);
-
-      // this.updatePaginationTotalPages(); //TODO
-
       return {
         tracks: filteredTracks,
       }
