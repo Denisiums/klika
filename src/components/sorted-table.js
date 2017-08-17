@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SortedTableHead from './sorted-table-head';
+import Pagination from './pagination';
 import TableRow from './table-row';
 import '../styles/sorted-table.css';
 
@@ -14,25 +15,45 @@ class SortedTable extends Component {
     this.props.handleSorting(fieldData);
   }
 
-  generateRows() {
+  render() {
+    if (!this.props.tracks || !this.props.sorting || !this.props.pagination) return null;
     return (
-      this.props.tracks.map(track => {
+      <div>
+        <table className="sorted-table">
+          <SortedTableHead handleSorting={this.handleSorting} sorting={this.props.sorting} />
+          <tbody>
+            {this.generateRows()}
+          </tbody>
+        </table>
+        <Pagination pagination={this.props.pagination} />
+      </div>
+    );
+  }
+
+  generateRows() {
+    const page = this.props.pagination.page;
+    const itemsPerPage = this.props.pagination.itemsPerPage;
+    const tracks = this.props.tracks;
+    const tracksListFrame = SortedTable.getArrayFrameByPage(tracks, page, itemsPerPage);
+    return (
+      //TODO: apply pagination here
+      tracksListFrame.map(track => {
         return (<TableRow key={track.id} track={track} />);
       })
     )
   }
 
-  render() {
-    if (!this.props.tracks || !this.props.sorting) return null;
-    return (
-      <table className="sorted-table">
-        <SortedTableHead handleSorting={this.handleSorting} sorting={this.props.sorting} />
-        <tbody>
-          {this.generateRows()}
-        </tbody>
-      </table>
-    );
+  static getArrayFrameByPage(array, page, frameSize) {
+    if (!array || !page || !Array.isArray(array) || !frameSize) return [];
+    const length = array.length;
+    const start = (page - 1) * frameSize;
+    let end = page * frameSize;
+    if (end > length) {
+      end = length;
+    }
+    return array.slice(start, end);
   }
+
 }
 
 export default SortedTable;

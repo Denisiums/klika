@@ -43,21 +43,25 @@ class FilteredTable extends Component {
 
     this.updateFiltersFields(this.props.rawTracks);
     this.applyAllFiltersToTracks(this.props.rawTracks);
-    this.updatePaginationTotalPages(this.props.rawTracks);
+    this.updatePaginationTotalPages();
   }
 
   componentWillReceiveProps(nextProps) {
     this.resetAllFilters();
     this.updateFiltersFields(nextProps.rawTracks);
     this.applyAllFiltersToTracks(nextProps.rawTracks);
-    this.updatePaginationTotalPages(nextProps.rawTracks);
+    this.updatePaginationTotalPages();
   }
 
   render() {
     if (!this.state.tracks) return null;
     return (
       <div className="filtered-table">
-        <SortedTable handleSorting={this.handleSorting} tracks={this.state.tracks} sorting={this.state.sorting} />
+        <SortedTable
+          handleSorting={this.handleSorting}
+          tracks={this.state.tracks}
+          pagination={this.state.pagination}
+          sorting={this.state.sorting} />
         <div>Filters</div>
       </div>
     );
@@ -82,6 +86,7 @@ class FilteredTable extends Component {
       }
     });
     this.applySortingToTracks();
+    this.updatePaginationTotalPages();
   }
 
   applySortingToTracks() {
@@ -93,9 +98,6 @@ class FilteredTable extends Component {
       filteredTracks.sort(sortingFunction);
       return {
         tracks: filteredTracks,
-        pagination: {
-          page: 1,
-        }
       }
     });
   }
@@ -112,9 +114,7 @@ class FilteredTable extends Component {
       const pagination = prevState.pagination;
       const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);
       let filteredTracks = [];
-
       filteredTracks = rawTracks.filter((el, index) => {
-
         return (FilteredTable.isPerformerValid(el.performer, filter.performer)
           && FilteredTable.isGenreValid(el.genre, filter.genre)
           && FilteredTable.isYearValid(el.year, filter.year));
@@ -122,14 +122,11 @@ class FilteredTable extends Component {
 
       filteredTracks.sort(sortingFunction);
 
-      // this.updatePaginationTotalPages(filteredTracks); //TODO
+      // this.updatePaginationTotalPages(); //TODO
 
       return {
         tracks: filteredTracks,
-        pagination: {
-          page: 1,
-        }
-      } // TODO: potential dangerous due asynchronous. Check later
+      }
     });
   };
 
@@ -176,16 +173,17 @@ class FilteredTable extends Component {
     return unique;
   }
 
-  updatePaginationTotalPages(tracks) {
-    if (!tracks) return;
-
+  updatePaginationTotalPages() {
     this.setState((prevState, props) => {
+      const tracks = prevState.tracks;
       const itemsPerPage = prevState.pagination.itemsPerPage;
       const totalItems = tracks.length;
       const newTotalPages = Math.ceil(totalItems / itemsPerPage);
       return {
         pagination: {
-          totalPages: newTotalPages
+          page: 1,
+          totalPages: newTotalPages,
+          itemsPerPage: itemsPerPage
         }
       }
     })
