@@ -200,6 +200,7 @@ class FilteredTable extends Component {
   }
 
   updateFilter({filter, value}) {
+    console.log('filter, value: ', filter, value);
     if (!filter || !value) throw new Error('Invalid state arguments!');
     this.setState(prevState => {
       const newFilter = Object.assign({}, prevState.filters);

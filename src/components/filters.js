@@ -25,7 +25,7 @@ class Filters extends Component {
   }
 
   onSelectYear(value) {
-    this.onSelectFilter('year', value);
+    this.onSelectFilter('year', +value);
   }
 
   render() {
