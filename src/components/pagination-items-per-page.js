@@ -19,7 +19,7 @@ class PaginationItemsPerPage extends Component {
   render() {
     if (!this.props.itemsPerPage) return null;
     return (
-      <div className="items-per-page">
+      <div className='items-per-page'>
         {this.generateItems(ITEMS_PER_PAGE)}
       </div>
     );

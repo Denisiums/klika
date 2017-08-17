@@ -26,7 +26,7 @@ class Pagination extends Component {
     const itemsPerPage = this.props.pagination.itemsPerPage;
     const totalPages = this.props.pagination.totalPages;
     return (
-      <div>
+      <div className='pagination'>
         <PaginationPaging handlePageClick={this.handlePageClick} page={page} totalPages={totalPages} />
         <PaginationItemsPerPage handleItemsPerPageUpdate={this.handleItemsPerPageUpdate} itemsPerPage={itemsPerPage} />
       </div>

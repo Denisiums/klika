@@ -1,0 +1,38 @@
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: nowrap;
+}
+
+.paging {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  &__button {
+    align-self: center;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    &--arrow {
+
+    }
+    &--active {
+      background-color: aliceblue;
+    }
+  }
+}
+
+.items-per-page {
+  &__button {
+    &--active {
+
+    }
+  }
+}

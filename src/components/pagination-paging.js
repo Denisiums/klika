@@ -36,14 +36,14 @@ class PaginationPaging extends Component {
       <div className='paging'>
         <div className='paging__button paging__button--arrow' onClick={this.handlePrevPageClick}>{'<'}</div>
           {this.generatePages(totalPages, page)}
-        <div onClick={this.handleNextPageClick}>{'>'}</div>
+        <div className='paging__button paging__button--arrow' onClick={this.handleNextPageClick}>{'>'}</div>
       </div>
     );
   }
 
   generatePages(total, page) {
     if (!total || !page) throw new Error('Invalid arguments!');
-    const AROUND_PAGES = 4; // should be even
+    const AROUND_PAGES = 2; // should be even
     const result = [];
 
     let from = (page - AROUND_PAGES < 1) ? 1 : (page - AROUND_PAGES);
@@ -83,7 +83,10 @@ class PaginationPaging extends Component {
   generatePageButton(number) {
     if (!number) throw new Error('Invalid arguments!');
     return (
-      <div onClick={this.handlePageClick} className='paging__button' key={number}>{number}</div>
+      <div
+        onClick={this.handlePageClick}
+        className={'paging__button ' + (this.props.page === number ? 'paging__button--active' : '')}
+        key={number}>{number}</div>
     )
   }
 
