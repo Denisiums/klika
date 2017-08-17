@@ -34,21 +34,24 @@ class Filters extends Component {
     if (!filtersFields || !filters || !this.props.onSelectFilter) return null;
     return (
       <div className='filters'>
-        <FilterSelect
-          onSelectFilter={this.onSelectPerformer}
-          name={'Performer'}
-          options={filtersFields.performer}
-          value={filters.performer} />
-        <FilterSelect
-          onSelectFilter={this.onSelectGenre}
-          name={'Genre'}
-          options={filtersFields.genre}
-          value={filters.genre} />
-        <FilterSelect
-          onSelectFilter={this.onSelectYear}
-          name={'Year'}
-          options={filtersFields.year}
-          value={filters.year} />
+        <h2 className='filters__header'>Filters</h2>
+        <div className='filters__set'>
+          <FilterSelect
+            onSelectFilter={this.onSelectPerformer}
+            name={'Performer'}
+            options={filtersFields.performer}
+            value={filters.performer} />
+          <FilterSelect
+            onSelectFilter={this.onSelectGenre}
+            name={'Genre'}
+            options={filtersFields.genre}
+            value={filters.genre} />
+          <FilterSelect
+            onSelectFilter={this.onSelectYear}
+            name={'Year'}
+            options={filtersFields.year}
+            value={filters.year} />
+        </div>
       </div>
     );
   }

@@ -21,7 +21,7 @@ class FilterSelect extends Component {
     return (
       <div className='filter'>
         <h4 className='filter__name'>{name}</h4>
-        <select onChange={this.handleSelect} name={name.toLowerCase()}>
+        <select className='filter__select' onChange={this.handleSelect} name={name.toLowerCase()}>
           {FilterSelect.generateOptions(options)}
         </select>
       </div>
@@ -33,7 +33,7 @@ class FilterSelect extends Component {
     return (
       list.map(item => {
         return (
-          <option className="filter__value" key={item} value={item}>{item}</option>
+          <option className="filter__option" key={item} value={item}>{item}</option>
         );
       })
     )

@@ -9,6 +9,12 @@
 
 .sorted-table {
   width: 100%;
+
+  &__header {
+    font-size: 20px;
+    text-align: left;
+    margin-bottom: 15px;
+  }
 }
 .table {
   border-collapse: collapse;

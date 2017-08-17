@@ -30,6 +30,7 @@ class SortedTable extends Component {
     if (!this.props.tracks || !this.props.sorting || !this.props.pagination) return null;
     return (
       <div className='sorted-table'>
+        <h2 className='sorted-table__header'>Playlist</h2>
         <table className='table'>
           <SortedTableHead handleSorting={this.handleSorting} sorting={this.props.sorting} />
           <tbody>
