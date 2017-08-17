@@ -7,12 +7,12 @@ class PaginationItemsPerPage extends Component {
 
   constructor(props) {
     super(props);
-    // this.handleSorting = this.handleSorting.bind(this);
+    this.handleItemsPerPageUpdate = this.handleItemsPerPageUpdate.bind(this);
   }
 
-  // handleSorting(fieldData) {
-  //   this.props.handleSorting(fieldData);
-  // }
+  handleItemsPerPageUpdate(itemsPerPage) {
+    this.props.handleItemsPerPageUpdate(itemsPerPage);
+  }
 
 
   render() {
@@ -29,7 +29,11 @@ class PaginationItemsPerPage extends Component {
     if (!currentItemsPerPage || !listOfValues || !Array.isArray(listOfValues)) throw new Error('Invalid arguments!');
     return (listOfValues.map(value => {
         return (
-          <PaginationItemsPerPageButton key={value} value={value} active={value === currentItemsPerPage} />
+          <PaginationItemsPerPageButton
+            handleItemsPerPageUpdate={this.handleItemsPerPageUpdate}
+            key={value}
+            value={value}
+            active={value === currentItemsPerPage} />
         )
       })
     )

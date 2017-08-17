@@ -36,6 +36,7 @@ class FilteredTable extends Component {
       filersFields: Object.assign({}, DEFAULT_FILTERS_FIELDS)
     };
     this.handleSorting = this.handleSorting.bind(this);
+    this.updateItemsPerPage = this.updateItemsPerPage.bind(this);
   };
 
   componentDidMount() {
@@ -61,6 +62,7 @@ class FilteredTable extends Component {
           handleSorting={this.handleSorting}
           tracks={this.state.tracks}
           pagination={this.state.pagination}
+          handleItemsPerPageUpdate={this.updateItemsPerPage}
           sorting={this.state.sorting} />
         <div>Filters</div>
       </div>
@@ -87,6 +89,22 @@ class FilteredTable extends Component {
     });
     this.applySortingToTracks();
     this.updatePaginationTotalPages();
+  }
+
+  updateItemsPerPage(itemsPerPage) {
+    console.log('updateItemsPerPage');
+    if (!itemsPerPage || this.state.pagination.itemsPerPage === itemsPerPage) return;
+    this.setState(prevState => {
+      const totalPages = prevState.pagination.totalPages;
+      const page = 1;
+      return {
+        pagination: {
+          page,
+          totalPages,
+          itemsPerPage
+        }
+      }
+    })
   }
 
   applySortingToTracks() {

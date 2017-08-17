@@ -9,10 +9,15 @@ class SortedTable extends Component {
   constructor(props) {
     super(props);
     this.handleSorting = this.handleSorting.bind(this);
+    this.handleItemsPerPageUpdate = this.handleItemsPerPageUpdate.bind(this);
   }
 
   handleSorting(fieldData) {
     this.props.handleSorting(fieldData);
+  }
+
+  handleItemsPerPageUpdate(itemsPerPage) {
+    this.props.handleItemsPerPageUpdate(itemsPerPage);
   }
 
   render() {
@@ -25,7 +30,9 @@ class SortedTable extends Component {
             {this.generateRows()}
           </tbody>
         </table>
-        <Pagination pagination={this.props.pagination} />
+        <Pagination
+          handleItemsPerPageUpdate={this.handleItemsPerPageUpdate}
+          pagination={this.props.pagination} />
       </div>
     );
   }

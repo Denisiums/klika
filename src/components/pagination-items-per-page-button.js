@@ -4,19 +4,19 @@ class PaginationItemsPerPageButton extends Component {
 
   constructor(props) {
     super(props);
-    // this.handleSorting = this.handleSorting.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  // handleSorting(fieldData) {
-  //   this.props.handleSorting(fieldData);
-  // }
+  handleClick(e) {
+    this.props.handleItemsPerPageUpdate(this.props.value);
+  }
 
 
   render() {
     const value = this.props.value;
-    if (!this.props.value) return null;
+    if (!this.props.value || !this.props.handleItemsPerPageUpdate) return null;
     return (
-      <div className={'items-per-page__button ' + (this.props.active ? 'items-per-page__button--active' : '')}>
+      <div onClick={this.handleClick} className={'items-per-page__button ' + (this.props.active ? 'items-per-page__button--active' : '')}>
         {value}
       </div>
     );

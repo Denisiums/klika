@@ -6,12 +6,12 @@ class Pagination extends Component {
 
   constructor(props) {
     super(props);
-    // this.handleSorting = this.handleSorting.bind(this);
+    this.handleItemsPerPageUpdate = this.handleItemsPerPageUpdate.bind(this);
   }
 
-  // handleSorting(fieldData) {
-  //   this.props.handleSorting(fieldData);
-  // }
+  handleItemsPerPageUpdate(itemsPerPage) {
+    this.props.handleItemsPerPageUpdate(itemsPerPage);
+  }
 
 
   render() {
@@ -22,7 +22,7 @@ class Pagination extends Component {
     return (
       <div>
         <PaginationPaging page={page} totalPages={totalPages} />
-        <PaginationItemsPerPage itemsPerPage={itemsPerPage} />
+        <PaginationItemsPerPage handleItemsPerPageUpdate={this.handleItemsPerPageUpdate} itemsPerPage={itemsPerPage} />
       </div>
     );
   }
