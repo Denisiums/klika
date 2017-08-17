@@ -22,7 +22,6 @@ class SortedTable extends Component {
   }
 
   handlePageClick(page) {
-    console.log('sorted table page: ', page);
     this.props.handlePageClick(page);
   }
 
@@ -46,7 +45,6 @@ class SortedTable extends Component {
   }
 
   generateRows() {
-    console.log('generate rows');
     const page = this.props.pagination.page;
     const itemsPerPage = this.props.pagination.itemsPerPage;
     const tracks = this.props.tracks;

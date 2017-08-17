@@ -30,7 +30,7 @@ class PaginationPaging extends Component {
     const AROUND_PAGES = 4; // should be even
     const result = [];
 
-    let from = (page - AROUND_PAGES < 1) ? 1 : (page - AROUND_PAGES < 1);
+    let from = (page - AROUND_PAGES < 1) ? 1 : (page - AROUND_PAGES);
     let to = (page + AROUND_PAGES > total) ? total : (page + AROUND_PAGES);
     console.log('from: ', from, ' to: ', to);
     for (let i = from; i <= to; i++) {
@@ -40,7 +40,7 @@ class PaginationPaging extends Component {
 
     if (from !== 1) {
       if (from !== 2) {
-        let secondButton = this.generateDots();
+        let secondButton = PaginationPaging.generateDots();
         if (from === 3) {
           secondButton = this.generatePageButton(2);
         }
@@ -66,6 +66,7 @@ class PaginationPaging extends Component {
   }
 
   generatePageButton(number) {
+    console.log('generatePageButton number: ', number);
     if (!number) throw new Error('Invalid arguments!');
     return (
       <div onClick={this.handlePageClick} className='paging__button' key={number}>{number}</div>

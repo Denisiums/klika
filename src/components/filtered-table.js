@@ -111,15 +111,16 @@ class FilteredTable extends Component {
   }
 
   updatePageNumber(page) {
-    console.log('page: ', page);
     if (!page || Number.isNaN(page)) throw new Error('Invalid page number!');
     this.setState(prevState => {
       const totalPages = prevState.pagination.totalPages;
       const itemsPerPage = prevState.pagination.itemsPerPage;
       return {
-        totalPages,
-        itemsPerPage,
-        page
+        pagination: {
+          totalPages,
+          itemsPerPage,
+          page
+        }
       }
     });
   }
