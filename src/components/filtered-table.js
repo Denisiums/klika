@@ -112,14 +112,16 @@ class FilteredTable extends Component {
 
   updatePageNumber(page) {
     if (!page || Number.isNaN(page)) throw new Error('Invalid page number!');
+    // todo: should we check is page same as in the state?
     this.setState(prevState => {
       const totalPages = prevState.pagination.totalPages;
       const itemsPerPage = prevState.pagination.itemsPerPage;
+      const newPage = (page < 1) ? 1 : ((page > totalPages) ? totalPages : page);
       return {
         pagination: {
           totalPages,
           itemsPerPage,
-          page
+          page: newPage
         }
       }
     });

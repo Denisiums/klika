@@ -5,10 +5,25 @@ class PaginationPaging extends Component {
   constructor(props) {
     super(props);
     this.handlePageClick = this.handlePageClick.bind(this);
+    this.handleNextPageClick = this.handleNextPageClick.bind(this);
+    this.handlePrevPageClick = this.handlePrevPageClick.bind(this);
   }
 
   handlePageClick(e) {
     const page = +e.target.textContent;
+    this.props.handlePageClick(page);
+  }
+
+  handleNextPageClick() {
+    const currentPage = this.props.page;
+    const total = this.props.totalPages;
+    const page = currentPage === total ? total : currentPage + 1 ;
+    this.props.handlePageClick(page);
+  }
+
+  handlePrevPageClick() {
+    const currentPage = this.props.page;
+    const page = currentPage === 1 ? currentPage : currentPage - 1 ;
     this.props.handlePageClick(page);
   }
 
@@ -18,9 +33,9 @@ class PaginationPaging extends Component {
     if (!page || !totalPages) return null;
     return (
       <div className='paging'>
-        <div>{'<'}</div>
+        <div className='paging__button paging__button--arrow' onClick={this.handlePrevPageClick}>{'<'}</div>
           {this.generatePages(totalPages, page)}
-        <div>{'>'}</div>
+        <div onClick={this.handleNextPageClick}>{'>'}</div>
       </div>
     );
   }
@@ -32,7 +47,6 @@ class PaginationPaging extends Component {
 
     let from = (page - AROUND_PAGES < 1) ? 1 : (page - AROUND_PAGES);
     let to = (page + AROUND_PAGES > total) ? total : (page + AROUND_PAGES);
-    console.log('from: ', from, ' to: ', to);
     for (let i = from; i <= to; i++) {
       const button = this.generatePageButton(i);
       result.push(button);
@@ -66,7 +80,6 @@ class PaginationPaging extends Component {
   }
 
   generatePageButton(number) {
-    console.log('generatePageButton number: ', number);
     if (!number) throw new Error('Invalid arguments!');
     return (
       <div onClick={this.handlePageClick} className='paging__button' key={number}>{number}</div>
