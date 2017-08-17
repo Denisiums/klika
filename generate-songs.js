@@ -10,12 +10,16 @@ const GENRES = [
   'Snore',
   'Noise'
 ];
+const DIR_PATH = path.join(__dirname, '/src/mocks');
 const FILE_PATH = path.join(__dirname, '/src/mocks/tracks.json');
 const AMOUNT = 214;
 
 generate();
 
 function generate() {
+  if (!fs.existsSync(DIR_PATH)){
+    fs.mkdirSync(DIR_PATH);
+  }
   fs.writeFile(FILE_PATH, generateSongsJSON(AMOUNT), err => {
     if(err) {
       throw err;
