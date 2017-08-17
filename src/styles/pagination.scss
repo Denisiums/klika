@@ -1,4 +1,5 @@
 .pagination {
+  position: relative;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
@@ -21,7 +22,6 @@
     padding: 10px;
     cursor: pointer;
     &--arrow {
-
     }
     &--active {
       background-color: aliceblue;
@@ -30,9 +30,22 @@
 }
 
 .items-per-page {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  flex-wrap: nowrap;
   &__button {
+    padding: 9px;
+    border: 1px solid lightgray;
+    cursor: pointer;
+    margin-left: -1px;
     &--active {
-
+      background-color: aliceblue;
     }
   }
 }
