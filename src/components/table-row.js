@@ -21,12 +21,12 @@ class TableRow extends Component {
     const year = this.props.track.year;
     const duration = TableRow.formatDuration(this.props.track.duration);
     return (
-      <tr className="sorted-table__row">
-        <td className="sorted-table__cell">{performer}</td>
-        <td className="sorted-table__cell">{name}</td>
-        <td className="sorted-table__cell">{genre}</td>
-        <td className="sorted-table__cell">{year}</td>
-        <td className="sorted-table__cell">{duration}</td>
+      <tr className="table__row">
+        <td className="table__cell">{performer}</td>
+        <td className="table__cell">{name}</td>
+        <td className="table__cell">{genre}</td>
+        <td className="table__cell">{year}</td>
+        <td className="table__cell">{duration}</td>
       </tr>
     );
   }

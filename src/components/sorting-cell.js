@@ -17,7 +17,7 @@ class SortingCell extends Component {
     return (
       <th
         onClick={this.handleClick}
-        className="sorted-table__cell sorted-table__cell--head">
+        className="table__cell table__cell--head">
         <span>{this.props.name}</span>
         {this.props.order && <span> {this.props.order} </span>}
         {!this.props.order && <span>N</span>}

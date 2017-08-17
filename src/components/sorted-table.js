@@ -29,8 +29,8 @@ class SortedTable extends Component {
   render() {
     if (!this.props.tracks || !this.props.sorting || !this.props.pagination) return null;
     return (
-      <div>
-        <table className="sorted-table">
+      <div className='sorted-table'>
+        <table className='table'>
           <SortedTableHead handleSorting={this.handleSorting} sorting={this.props.sorting} />
           <tbody>
             {this.generateRows()}

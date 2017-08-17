@@ -18,13 +18,33 @@ class SortedTableHead extends Component {
     const order = this.props.sorting.order;
     const sortingField = this.props.sorting.field;
     return (
-      <thead className="sorted-table__head">
-        <tr>
-          <SortingCell onSortingCellClick={this.handleSorting} name={'Исполнитель'} fieldName={'performer'} order={sortingField === 'performer' ? order : null } />
-          <SortingCell onSortingCellClick={this.handleSorting} name={'Песня'} fieldName={'name'} order={sortingField === 'name' ? order : null } />
-          <SortingCell onSortingCellClick={this.handleSorting} name={'Жанр'} fieldName={'genre'} order={sortingField === 'genre' ? order : null } />
-          <SortingCell onSortingCellClick={this.handleSorting} name={'Год'} fieldName={'year'} order={sortingField === 'year' ? order : null } />
-          <SortingCell onSortingCellClick={this.handleSorting} name={'Продолжительность'} fieldName={'duration'} order={sortingField === 'duration' ? order : null } />
+      <thead className="table__head">
+        <tr className="table__row table__row--head">
+          <SortingCell
+            onSortingCellClick={this.handleSorting}
+            name={'Performer'}
+            fieldName={'performer'}
+            order={sortingField === 'performer' ? order : null } />
+          <SortingCell
+            onSortingCellClick={this.handleSorting}
+            name={'Track name'}
+            fieldName={'name'}
+            order={sortingField === 'name' ? order : null } />
+          <SortingCell
+            onSortingCellClick={this.handleSorting}
+            name={'Genre'}
+            fieldName={'genre'}
+            order={sortingField === 'genre' ? order : null } />
+          <SortingCell
+            onSortingCellClick={this.handleSorting}
+            name={'Year'}
+            fieldName={'year'}
+            order={sortingField === 'year' ? order : null } />
+          <SortingCell
+            onSortingCellClick={this.handleSorting}
+            name={'Duration'}
+            fieldName={'duration'}
+            order={sortingField === 'duration' ? order : null } />
         </tr>
       </thead>
     );
