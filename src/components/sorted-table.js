@@ -44,7 +44,7 @@ class SortedTable extends Component {
   }
 
   static getArrayFrameByPage(array, page, frameSize) {
-    if (!array || !page || !Array.isArray(array) || !frameSize) return [];
+    if (!array || !page || !Array.isArray(array) || !frameSize) throw new Error('Invalid arguments!');
     const length = array.length;
     const start = (page - 1) * frameSize;
     let end = page * frameSize;

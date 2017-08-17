@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PaginationPaging from './pagination-paging'
+import PaginationItemsPerPage from './pagination-items-per-page'
 
 class Pagination extends Component {
 
@@ -21,7 +22,7 @@ class Pagination extends Component {
     return (
       <div>
         <PaginationPaging page={page} totalPages={totalPages} />
-        <div>Items</div>
+        <PaginationItemsPerPage itemsPerPage={itemsPerPage} />
       </div>
     );
   }

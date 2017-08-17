@@ -13,9 +13,9 @@ class PaginationPaging extends Component {
 
 
   render() {
-    if (!this.props.page || !this.props.totalPages) return null;
     const page = this.props.page;
     const totalPages = this.props.totalPages;
+    if (!page || !totalPages) return null;
     return (
       <div>
         page: {page}. Total pages: {totalPages}
