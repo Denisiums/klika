@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/filtered-table.css';
 import SortedTable from './sorted-table';
+import Filters from './filters';
 
 const DEFAULT_FILTERS = {
   performer: 'all',
@@ -33,7 +34,7 @@ class FilteredTable extends Component {
       filters: Object.assign({}, DEFAULT_FILTERS),
       pagination: Object.assign({}, DEFAULT_PAGINATION),
       sorting: Object.assign({}, DEFAULT_SORTING),
-      filersFields: Object.assign({}, DEFAULT_FILTERS_FIELDS)
+      filtersFields: Object.assign({}, DEFAULT_FILTERS_FIELDS)
     };
     this.handleSorting = this.handleSorting.bind(this);
     this.updateItemsPerPage = this.updateItemsPerPage.bind(this);
@@ -66,7 +67,7 @@ class FilteredTable extends Component {
           handleItemsPerPageUpdate={this.updateItemsPerPage}
           handlePageClick={this.updatePageNumber}
           sorting={this.state.sorting} />
-        <div>Filters</div>
+        <Filters filters={this.state.filters} filtersFields={this.state.filtersFields} />
       </div>
     );
   }
@@ -149,7 +150,6 @@ class FilteredTable extends Component {
       console.log('applyAllFiltersToTracks');
       const filter = prevState.filters;
       const sorting = prevState.sorting;
-      const pagination = prevState.pagination;
       const sortingFunction = FilteredTable.getFieldSortingFunction(sorting.field, sorting.order);
       let filteredTracks = [];
       filteredTracks = rawTracks.filter((el, index) => {
@@ -200,7 +200,7 @@ class FilteredTable extends Component {
     filters.genre = filters.genre.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'genre'));
     filters.year = filters.year.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'year'));
     this.setState({
-      filersFields: filters
+      filtersFields: filters
     });
   }
 
