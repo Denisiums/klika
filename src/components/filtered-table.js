@@ -95,7 +95,8 @@ class FilteredTable extends Component {
     console.log('updateItemsPerPage');
     if (!itemsPerPage || this.state.pagination.itemsPerPage === itemsPerPage) return;
     this.setState(prevState => {
-      const totalPages = prevState.pagination.totalPages;
+      const totalItems = prevState.tracks.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
       const page = 1;
       return {
         pagination: {
