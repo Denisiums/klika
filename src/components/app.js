@@ -3,8 +3,6 @@ import '../styles/app.css';
 import TRACKS from '../mocks/tracks.json';
 import FilteredTable from './filtered-table';
 
-
-
 class App extends Component {
   constructor(props) {
     super(props);

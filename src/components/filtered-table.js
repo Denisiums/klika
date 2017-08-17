@@ -196,9 +196,10 @@ class FilteredTable extends Component {
     if (!rawTracks) return;
 
     const filters = Object.assign({}, DEFAULT_FILTERS_FIELDS);
-    filters.performer = filters.performer.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'performer'));
-    filters.genre = filters.genre.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'genre'));
-    filters.year = filters.year.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'year'));
+    filters.performer = filters.performer.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'performer').sort());
+    filters.genre = filters.genre.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'genre').sort());
+    filters.year = filters.year.concat(this.getUniqueValuesByKeyFromArray(rawTracks, 'year').sort());
+
     this.setState({
       filtersFields: filters
     });
